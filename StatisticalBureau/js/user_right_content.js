@@ -33,7 +33,8 @@ function register_event() {
 		//隐藏地区下拉列表
 		$(".area-select").css("display", "none");
 		areaSelectShow = false;
-		
+
+		$(".content-div .cover").css("display", "none");
 	});
 	//年份选择
 	$(".year-bt").click(function(e) {

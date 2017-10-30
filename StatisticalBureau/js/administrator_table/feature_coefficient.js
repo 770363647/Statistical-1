@@ -35,7 +35,7 @@ function find() {
 		dataType: "json",
 		data: json,
 		cache: false,
-		async: false,
+		async: true,
 		contentType: "application/json; charset=utf-8",
 		success: function(data, textStatus, jqXHR) {
 			if('success' == textStatus) {
@@ -56,15 +56,12 @@ function find() {
 
 				$(".body table tbody").append(code);
 			}
-			return true;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
 			//加载失败
 			loadFailure();
-			return false;
 		}
 	});
-	return false;
 }
 
 //显示提示框

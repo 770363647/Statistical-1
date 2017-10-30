@@ -27,16 +27,65 @@ function resize() {
 
 //TODO：获取表格内容
 function getContent() {
-	rotateLoading();
+	loading("正在加载...");
 	var code = '';
+	var url = 'http://192.168.1.102:8080/Statistic/BaseQuery/gfCoefficientGet';
+	var json = '';
+
+	$.ajax({
+		url: url,
+		type: "post",
+		dataType: "json",
+		data: json,
+		cache: false,
+		async: true,
+		contentType: "application/json; charset=utf-8",
+		success: function(data) {
+			//加载成功
+			loadSuccess();
+			$.each(data, function(i, n) {
+
+				//遍历数据生成表格
+				code += '<tr>';
+				code += '<td contentEditable="true">' + 1 + '</td>';
+				code += '<td contentEditable="true">' + 2 + '</td>';
+				code += '<td contentEditable="true">' + 3 + '</td>';
+				code += '<td contentEditable="true">' + 4 + '</td>';
+				code += '<td contentEditable="true">' + 5 + '</td>';
+				code += '<td contentEditable="true">' + 6 + '</td>';
+				code += '<td contentEditable="true">' + 7 + '</td>';
+				code += '<td contentEditable="true">' + 8 + '</td>';
+				code += '</tr> ';
+
+			});
+			$(".body table tbody").append(code);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			failure("无内容,请添加后上传");
+			addData();
+		}
+	});
+
+}
+
+//TODO:上传
+function upload() {
+	loading("正在上传...");
+	var parent = $(".table-div table tbody td");
+	var yearAvergeSpendDay = parent.eq(0).text();
+	var avergeSpend = parent.eq(1).text();
+	var travelSpendday = parent.eq(2).text();
+	var townAvergeSpend = parent.eq(3).text();
+	var livePeople = parent.eq(4).text();
+	var dayTravlePeople = parent.eq(5).text();
 	var url = 'http://192.168.1.102:8080/Statistic/FileUpload/gfCorfficientmath';
 	var json = '{';
-	json += 'yearAvergeSpendDay: ' + 1;
-	json += ',avergeSpend: ' + 1;
-	json += ',travelSpendday: ' + 1;
-	json += ',townAvergeSpend: ' + 1;
-	json += ',livePeople: ' + 1;
-	json += ',dayTravlePeople: ' + 1;
+	json += 'yearAvergeSpendDay: ' + yearAvergeSpendDay;
+	json += ',avergeSpend: ' + avergeSpend;
+	json += ',travelSpendday: ' + travelSpendday;
+	json += ',townAvergeSpend: ' + townAvergeSpend;
+	json += ',livePeople: ' + livePeople;
+	json += ',dayTravlePeople: ' + dayTravlePeople;
 	json += '}';
 
 	$.ajax({
@@ -46,44 +95,17 @@ function getContent() {
 		data: json,
 		cache: false,
 		async: true,
-		timeout: 10000,
 		contentType: "application/json; charset=utf-8",
 		success: function(data) {
-			//加载成功
-			loadSuccess();
-			$.each(data, function(i, n) {
-
-				//遍历数据生成表格
-				code += '<tr>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '<td contentEditable="true">' + '</td>';
-				code += '</tr> ';
-
-			});
-			$(".body table tbody").append(code);
+			$(".tip img").attr("src", "");
+			$(".tip p").text("上传成功");
+			setTimeout(function() {
+				closeTip();
+			}, 3000);
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//加载失败
-			loadFailure();
+			failure("上传失败");
 		}
-	});
-
-}
-
-//TODO:上传
-function upload() {
-	//触发文件选择框
-	$(".upload-input").trigger("click");
-	//获取文件路径
-	var url = '';
-	$(".upload-input").change(function() {
-		url = $(".upload-input").val();
 	});
 
 }
@@ -91,4 +113,25 @@ function upload() {
 //TODO:保存
 function save() {
 
+}
+
+//TODO:加载无内容,添加数据
+function addData() {
+	$(".table-div table").css("display", "block");
+	$(".table-div table").css("display");
+	$(".table-div table").css("opacity", "1");
+	var code = '';
+	code += '<tr>';
+	code += '<td contentEditable="true">' + 1 + '</td>';
+	code += '<td contentEditable="true">' + 2 + '</td>';
+	code += '<td contentEditable="true">' + 3 + '</td>';
+	code += '<td contentEditable="true">' + 4 + '</td>';
+	code += '<td contentEditable="true">' + 5 + '</td>';
+	code += '<td contentEditable="true">' + 6 + '</td>';
+	code += '<td contentEditable="true">' + 7 + '</td>';
+	code += '<td contentEditable="true">' + 8 + '</td>';
+	code += '</tr> ';
+	$(".body table tbody").append(code);
+	resize();
+	showUploadBt();
 }

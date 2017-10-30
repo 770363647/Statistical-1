@@ -1,15 +1,5 @@
 $(document).ready(function() {
 	$("body").css("opacity", "1");
-	var code = '';
-	for(var i = 0; i < 58; i++) {
-		code += '<tr>';
-		code += '<td contentEditable="true">壹</td>';
-		code += '<td contentEditable="true">贰</td>';
-		code += '<td contentEditable="true">仨</td>';
-		code += '<td contentEditable="true">肆</td>';
-		code += '</tr> ';
-	}
-	$(".body table tbody").append(code);
 	init();
 	getContent();
 });
@@ -28,8 +18,9 @@ function resize() {
 
 //TODO：获取表格内容
 function getContent() {
-	rotateLoading();
-	var url = '';
+	loading("正在加载...");
+	var code = '';
+	var url = 'http://192.168.1.102:8080/Statistic/IntegratedQuery/classTaxContributeSearch';
 	var json = '';
 
 	$.ajax({
@@ -38,7 +29,7 @@ function getContent() {
 		dataType: "json",
 		data: json,
 		cache: false,
-		async: false,
+		async: true,
 		contentType: "application/json; charset=utf-8",
 		success: function(data, textStatus, jqXHR) {
 			if('success' == textStatus) {
@@ -55,15 +46,12 @@ function getContent() {
 
 				$(".body table tbody").append(code);
 			}
-			return true;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//加载失败
-			loadFailure();
-			return false;
+			failure("无内容,请上传");
+			addData();
 		}
 	});
-	return false;
 }
 
 //TODO:上传
@@ -81,4 +69,9 @@ function upload() {
 //TODO:保存
 function save() {
 
+}
+
+//TODO:加载无内容,添加数据
+function addData() {
+	showUploadBt();
 }

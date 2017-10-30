@@ -1,19 +1,6 @@
 $(document).ready(function() {
-	$(".body").css("display", "none");
-	$(".footer").css("opacity", "1");
-	$("body").css("opacity", "1");
-	var code = '';
-	for(var i = 0; i < 58; i++) {
-		code += '<tr>';
-		code += '<td>壹</td>';
-		code += '<td>贰</td>';
-		code += '<td>仨</td>';
-		code += '</tr> ';
-	}
-	$(".body table tbody").append(code);
+	$(".calculate").css("display", "initial");
 	init();
-
-	resize();
 });
 
 function resize() {
@@ -29,8 +16,8 @@ function resize() {
 //TODO:计算
 function calculate() {
 	$(".body").css("display", "block");
-	rotateLoading();
-	var url = 'http://192.168.1.102:8080/Statistic/SelfDefineSearch/ClassSearche';
+	loading("正在计算...");
+	var url = 'http://192.168.1.102:8080/Statistic/TravelGdpCalculat/subTravelGdpCaculate';
 	var json = '';
 
 	$.ajax({
@@ -39,7 +26,7 @@ function calculate() {
 		dataType: "json",
 		data: json,
 		cache: false,
-		async: false,
+		async: true,
 		contentType: "application/json; charset=utf-8",
 		success: function(data, textStatus, jqXHR) {
 			if('success' == textStatus) {
@@ -55,13 +42,9 @@ function calculate() {
 
 				$(".body table tbody").append(code);
 			}
-			return true;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//加载失败
-			loadFailure();
-			return false;
+			failure("计算失败");
 		}
 	});
-	return false;
 }

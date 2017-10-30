@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$(".table-div").css("visibility", "hidden");
-	$(".custom-footer").css("visibility", "hidden");
 	init();
 });
 
@@ -8,6 +7,8 @@ var checkbox_name = new Array("税收", "旅游税收", "GDP", "旅游GDP");
 var thead;
 //TODO:确定按钮点击事件
 function asure() {
+	$(".tip img").attr("src", "../../img/loading.png");
+	$(".tip p").text("正在加载...");
 	showTable();
 	createTable();
 }
@@ -36,7 +37,6 @@ function createTable() {
 	$(".table-div table thead tr").remove();
 	$(".table-div table thead").append(code);
 	getContent();
-	resize();
 }
 //TODO:自定义查询中表格的自适应
 function resize() {
@@ -50,26 +50,44 @@ function resize() {
 
 //TODO：获取表格内容
 function getContent() {
-	rotateLoading();
+	loading("正在加载");
 	//获取行业规模
 	var industry_scale = $("input[name='industry-scale']:checked").val();
-	var url = '';
-	var json = '';
-	var code = '';
 	//未选择行业规模返回
 	if(industry_scale == null) {
 		$(".tip").css("display", "none");
 		alert("请选择行业规模");
 		return;
 	}
+	var code = '';
+	var url = 'http://192.168.1.102:8080/Statistic/SelfDefineSearch/Searche';
+	var json = '';
+	var type = 0;
+	if(industry_scale == "小类")
+		type += 32;
+	else if(industry_scale == "大类")
+		type += 16;
+	else if(industry_scale == "门类")
+		type += 64;
 
+	for(var i = 2; i < thead.length; i++) {
+		if(thead[i] == checkbox_name[3])
+			type += 1;
+		else if(thead[i] == checkbox_name[1])
+			type += 2;
+		else if(thead[i] == checkbox_name[2])
+			type += 4;
+		else if(thead[i] == checkbox_name[0])
+			type += 8;
+	}
+	json += '{type:' + type + '}';
 	$.ajax({
 		url: url,
 		type: "post",
 		dataType: "json",
 		data: json,
 		cache: false,
-		async: false,
+		async: true,
 		contentType: "application/json; charset=utf-8",
 		success: function(data, textStatus, jqXHR) {
 			if('success' == textStatus) {
@@ -80,7 +98,7 @@ function getContent() {
 
 				code += '<tr>';
 				for(var j = 0; j < thead.length; j++) {
-					code += '<td contentEditable="true">' + '</td>';
+					code += '<td>' + '</td>';
 				}
 				code += '</tr> ';
 
@@ -90,7 +108,7 @@ function getContent() {
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
 			//加载失败
-			loadFailure();
+			failure("加载失败");
 		}
 	});
 
@@ -99,7 +117,7 @@ function getContent() {
 //显示表格
 function showTable() {
 	$(".result-body").css("visibility", "visible");
-	$(".tip").css("display","block");
+	$(".tip").css("display", "block");
 	$(".table-div table").css("display", "block");
 	$(".table-div table").css("display");
 	$(".table-div table").css("opacity", "1");

@@ -71,6 +71,7 @@ function register_event() {
 		}
 		var username = $(".account input").val();
 		var password = $(".password input").val();
+		var year=$(".year-bt span").text();
 		var userpower = 0;
 		switch($(".user-type span").text()) {
 			case '管理员':
@@ -86,7 +87,7 @@ function register_event() {
 				break;
 		}
 		//登录信息错误返回
-	/*	if(!checkLoginInfo(username, password, userpower))
+	/*	if(!checkLoginInfo(username, password, userpower,year))
 			return;*/
 		var userType = $(".user-type-bt span").text();
 		var area = cur_country + "," + cur_province + "," + cur_city + "," + cur_county;
@@ -158,5 +159,4 @@ function checkLoginInfo(username, password, userpower) {
 			return false;
 		}
 	});
-	return false;
 }

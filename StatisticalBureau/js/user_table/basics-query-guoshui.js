@@ -1,15 +1,5 @@
 $(document).ready(function() {
-	$(".footer").css("opacity", "1");
-	$("body").css("opacity", "1");
-	var code = '';
-	for(var i = 0; i < 58; i++) {
-		code += '<tr>';
-		code += '<td contentEditable="true">壹</td>';
-		code += '<td contentEditable="true">贰</td>';
-		code += '<td contentEditable="true">仨</td>';
-		code += '</tr> ';
-	}
-	$(".body table tbody").append(code);
+	$(".find").css("display", "initial");
 	init();
 });
 
@@ -26,8 +16,9 @@ function resize() {
 //TODO：查找
 function find() {
 	showBody();
-	rotateLoading();
-	var url = '';
+	loading("正在查询...");
+	var code = '';
+	var url = 'http://192.168.1.102:8080/Statistic/BaseQuery/centralTaxGet';
 	var json = '';
 
 	$.ajax({
@@ -36,7 +27,7 @@ function find() {
 		dataType: "json",
 		data: json,
 		cache: false,
-		async: false,
+		async: true,
 		contentType: "application/json; charset=utf-8",
 		success: function(data, textStatus, jqXHR) {
 			if('success' == textStatus) {
@@ -52,15 +43,11 @@ function find() {
 
 				$(".body table tbody").append(code);
 			}
-			return true;
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//加载失败
-			loadFailure();
-			return false;
+			failure("无查询结果");
 		}
 	});
-	return false;
 }
 
 //TODO:下载

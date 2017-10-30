@@ -15,6 +15,7 @@ function closeTip() {
 //TODO：加载成功显示表格
 function loadSuccess() {
 	closeTip();
+	$(".table-div").css("visibility", "visible");
 	$(".table-div table").css("display", "block");
 	$(".table-div table").css("display");
 	$(".table-div table").css("opacity", "1");
@@ -37,6 +38,8 @@ function uploadSuccess() {
 var rotate;
 
 function rotateLoading() {
+	if(rotate != null)
+		window.clearInterval(rotate);
 	var deg = 30;
 	var count = 0;
 	rotate = setInterval(function() {
