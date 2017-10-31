@@ -8,37 +8,22 @@
 		<link rel="stylesheet" href="../../css/administrator_table.css" />
 		<script type="text/javascript" src="../../js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				$("body").css("opacity", "1");
-				var code = '';
-				for(var i = 0; i < 58; i++) {
-					code += '<tr>';
-					code += '<td contentEditable="true">壹</td>';
-					code += '<td contentEditable="true">贰</td>';
-					code += '<td contentEditable="true">仨</td>';
-					code += '</tr> ';
-				}
-				$(".body table tbody").append(code);
-
-				resize();
-			});
-
-			function resize() {
-				var _width = $('.table-div').width();
-				$('.table-div th:first-child').width(_width * 0.4);
-				$('.table-div td:first-child').width(_width * 0.4);
-				$('.table-div th:nth-child(2)').width(_width * 0.3);
-				$('.table-div td:nth-child(2)').width(_width * 0.3);
-				$('.table-div th:nth-child(3)').width(_width * 0.3);
-				$('.table-div td:nth-child(3)').width(_width * 0.3);
+		<script type="text/javascript" src="../../js/administrator_table.js"></script>
+		<script type="text/javascript" src="../../js/administrator_table/industry_code_base.js"></script>
+		<style>
+			.footer .footer-bt {
+				display: none;
 			}
-		</script>
-
+		</style>
 	</head>
 
 	<body onresize="resize()">
 		<div class="body">
+			<!--提示信息（正在加载、加载失败）-->
+			<div class="tip">
+				<img src="../../img/loading.png" />
+				<p></p>
+			</div>
 			<div class="table-div">
 				<table cellpadding="0" cellspacing="0">
 					<thead>
@@ -57,8 +42,9 @@
 			</div>
 		</div>
 		<div class="footer">
-			<button class="footer-bt download">下载</button>
-			<button class="footer-bt upload">上传</button>
+			<button class="footer-bt download" onclick="download()">下载</button>
+			<button class="footer-bt upload" onclick="upload()">上传</button>
+			<input class="upload-input" type="file" />
 		</div>
 	</body>
 

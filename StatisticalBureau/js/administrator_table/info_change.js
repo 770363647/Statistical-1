@@ -1,6 +1,17 @@
 $(document).ready(function() {
 	$("body").css("opacity", "1");
+	var code = '';
+	for(var i = 0; i < 18; i++) {
+		code += '<tr>';
+		code += '<td>壹</td>';
+		code += '<td contentEditable="true">贰</td>';
+		code += '<td contentEditable="true">仨</td>';
+		code += '</tr> ';
+	}
+	$(".body table tbody").append(code);
 
+	resize();
+	getContent();
 });
 
 function resize() {
@@ -13,10 +24,10 @@ function resize() {
 	$('.table-div td:nth-child(3)').width(_width * 0.3);
 }
 
-//TODO：查找
-function find() {
+//TODO：获取表格内容
+function getContent() {
 	showTipBox();
-	loading("正在查询...");
+	loading("正在加载用户信息...");
 	var code = '';
 	var url = 'http://192.168.1.102:8080/Statistic/BaseQuery/gfCoefficientGet';
 	var json = '';
@@ -36,19 +47,24 @@ function find() {
 
 				//遍历数据生成表格
 				code += '<tr>';
-				code += '<td contentEditable="true">' +1+ '</td>';
-				code += '<td contentEditable="true">' +2+ '</td>';
-				code += '<td contentEditable="true">' +3+ '</td>';
+				code += '<td contentEditable="true">' + 1 + '</td>';
+				code += '<td contentEditable="true">' + 2 + '</td>';
+				code += '<td contentEditable="true">' + 3 + '</td>';
 				code += '</tr> ';
 
 				$(".body table tbody").append(code);
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//查询失败
-			failure("查询失败");
+			//加载失败
+			failure("加载失败");
 		}
 	});
+}
+
+//TODO:保存
+function save() {
+
 }
 
 //显示提示框

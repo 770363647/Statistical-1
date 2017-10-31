@@ -8,83 +8,8 @@
 		<link rel="stylesheet" href="../../css/administrator_table.css" />
 		<script type="text/javascript" src="../../js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				$("body").css("opacity", "1");
-			});
-			//添加超级用户
-			function addSuperUser() {
-				$(".super-user").css("display", "block");
-				$(".ordinary-user").css("display", "none");
-				hiddenBtGroup();
-				var code = '';
-				for(var i = 0; i < 58; i++) {
-					code += '<tr>';
-					code += '<td>壹</td>';
-					code += '<td>贰</td>';
-					code += '<td>仨</td>';
-					code += '</tr> ';
-				}
-				$(".super-user table").append(code);
-
-				superUserResize();
-			}
-			//添加普通用户
-			function addOrdinaryUser() {
-				$(".ordinary-user").css("display", "block");
-				$(".super-user").css("display", "none");
-				hiddenBtGroup();
-
-				var code = '';
-				for(var i = 0; i < 58; i++) {
-					code += '<tr>';
-					code += '<td>壹</td>';
-					code += '<td>贰</td>';
-					code += '<td>仨</td>';
-					code += '<td>肆</td>';
-					code += '</tr> ';
-				}
-				$(".ordinary-user table").append(code);
-				
-				ordinaryUserResize()
-			}
-
-			//超级用户添加表自适应
-			function superUserResize() {
-				var _width = $('.super-user').width();
-				$('.super-user th:first-child').width(_width * 0.4);
-				$('.super-user td:first-child').width(_width * 0.4);
-				$('.super-user th:nth-child(2)').width(_width * 0.3);
-				$('.super-user td:nth-child(2)').width(_width * 0.3);
-				$('.super-user th:nth-child(3)').width(_width * 0.3);
-				$('.super-user td:nth-child(3)').width(_width * 0.3);
-			}
-
-			//普通用户添加表自适应
-			function ordinaryUserResize() {
-				var _width = $('.ordinary-user').width();
-				$('.ordinary-user th:first-child').width(_width * 0.25);
-				$('.ordinary-user td:first-child').width(_width * 0.25);
-				$('.ordinary-user th:nth-child(2)').width(_width * 0.25);
-				$('.ordinary-user td:nth-child(2)').width(_width * 0.25);
-				$('.ordinary-user th:nth-child(3)').width(_width * 0.25);
-				$('.ordinary-user td:nth-child(3)').width(_width * 0.25);
-				$('.ordinary-user th:nth-child(4)').width(_width * 0.25);
-				$('.ordinary-user td:nth-child(4)').width(_width * 0.25);
-			}
-
-			//隐藏按钮组
-			function hiddenBtGroup() {
-				$(".select-bt-group").css("display", "none");
-			}
-
-			//返回
-			function back() {
-				$(".super-user").css("display", "none");
-				$(".ordinary-user").css("display", "none");
-				$(".select-bt-group").css("display", "block");
-			}
-		</script>
+		<script type="text/javascript" src="../../js/administrator_table.js"></script>
+		<script type="text/javascript" src="../../js/administrator_table/new_user.js"></script>
 		<style>
 			.super-user,
 			.ordinary-user {
@@ -99,9 +24,14 @@
 				<button onclick="addSuperUser()">超级用户添加</button>
 				<button onclick="addOrdinaryUser()">普通用户添加</button>
 			</div>
-			<!--超级用户添加-->
+			<!--超级用户添加 start-->
 			<div class="super-user">
 				<div class="table-div">
+					<!--提示信息（正在加载、加载失败）-->
+					<div class="tip">
+						<img src="../../img/loading.png" />
+						<p></p>
+					</div>
 					<table cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
@@ -113,16 +43,23 @@
 								<th>地区</th>
 							</tr>
 						</thead>
-						<tbody style="max-height: 600px;"></tbody>
+						<tbody></tbody>
 					</table>
 					<div class="footer">
 						<button class="footer-bt back" onclick="back()">返回</button>
 					</div>
 				</div>
 			</div>
-			<!--普通用户添加-->
+			<!--超级用户添加 end-->
+
+			<!--普通用户添加 start-->
 			<div class="ordinary-user">
 				<div class="table-div">
+					<!--提示信息（正在加载、加载失败）-->
+					<div class="tip">
+						<img src="../../img/loading.png" />
+						<p></p>
+					</div>
 					<table cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
@@ -135,13 +72,14 @@
 								<th>权限</th>
 							</tr>
 						</thead>
-						<tbody style="max-height: 600px;"></tbody>
+						<tbody></tbody>
 					</table>
 					<div class="footer">
 						<button class="footer-bt back" onclick="back()">返回</button>
 					</div>
 				</div>
 			</div>
+			<!--普通用户添加 end-->
 		</div>
 
 	</body>

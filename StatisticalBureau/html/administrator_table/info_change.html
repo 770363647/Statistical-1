@@ -8,36 +8,17 @@
 		<link rel="stylesheet" href="../../css/administrator_table.css" />
 		<script type="text/javascript" src="../../js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				$("body").css("opacity", "1");
-				var code = '';
-				for(var i = 0; i < 18; i++) {
-					code += '<tr>';
-					code += '<td>壹</td>';
-					code += '<td contentEditable="true">贰</td>';
-					code += '<td contentEditable="true">仨</td>';
-					code += '</tr> ';
-				}
-				$(".body table tbody").append(code);
-
-				resize();
-			});
-
-			function resize() {
-				var _width = $('.table-div').width();
-				$('.table-div th:first-child').width(_width * 0.4);
-				$('.table-div td:first-child').width(_width * 0.4);
-				$('.table-div th:nth-child(2)').width(_width * 0.3);
-				$('.table-div td:nth-child(2)').width(_width * 0.3);
-				$('.table-div th:nth-child(3)').width(_width * 0.3);
-				$('.table-div td:nth-child(3)').width(_width * 0.3);
-			}
-		</script>
+		<script type="text/javascript" src="../../js/administrator_table.js"></script>
+		<script type="text/javascript" src="../../js/administrator_table/info_change.js"></script>
 	</head>
 
 	<body onresize="resize()">
 		<div class="body">
+			<!--提示信息（正在加载、加载失败）-->
+			<div class="tip">
+				<img src="../../img/loading.png" />
+				<p></p>
+			</div>
 			<div class="table-div">
 				<table cellpadding="0" cellspacing="0">
 					<thead>
@@ -50,13 +31,12 @@
 							<th>地区</th>
 						</tr>
 					</thead>
-
-					<tbody style="max-height: 600px;"></tbody>
+					<tbody></tbody>
 				</table>
 			</div>
 		</div>
 		<div class="footer">
-			<button class="footer-bt store">保存</button>
+			<button class="footer-bt store" onclick="save()">保存</button>
 		</div>
 	</body>
 

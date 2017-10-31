@@ -1,22 +1,20 @@
 $(document).ready(function() {
 	$("body").css("opacity", "1");
-
+	getContent();
 });
 
 function resize() {
 	var _width = $('.table-div').width();
 	$('.table-div th:first-child').width(_width * 0.4);
 	$('.table-div td:first-child').width(_width * 0.4);
-	$('.table-div th:nth-child(2)').width(_width * 0.3);
-	$('.table-div td:nth-child(2)').width(_width * 0.3);
-	$('.table-div th:nth-child(3)').width(_width * 0.3);
-	$('.table-div td:nth-child(3)').width(_width * 0.3);
+	$('.table-div th:nth-child(2)').width(_width * 0.6);
+	$('.table-div td:nth-child(2)').width(_width * 0.6);
 }
 
-//TODO：查找
-function find() {
+//TODO：获取表格内容
+function getContent() {
 	showTipBox();
-	loading("正在查询...");
+	loading("正在加载用户权限信息...");
 	var code = '';
 	var url = 'http://192.168.1.102:8080/Statistic/BaseQuery/gfCoefficientGet';
 	var json = '';
@@ -36,19 +34,28 @@ function find() {
 
 				//遍历数据生成表格
 				code += '<tr>';
-				code += '<td contentEditable="true">' +1+ '</td>';
-				code += '<td contentEditable="true">' +2+ '</td>';
-				code += '<td contentEditable="true">' +3+ '</td>';
+				code += '<td>' + 1 + '</td>';
+				code += '<td>';
+				code += '<input type="checkbox"><span>数据输入</span></input>';
+				code += '<input type="checkbox"><span>数据计算</span></input>';
+				code += '<input type="checkbox"><span>数据汇总</span></input>';
+				code += '<input type="checkbox"><span>数据查询</span></input>';
+				code += '</td>';
 				code += '</tr> ';
 
 				$(".body table tbody").append(code);
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) {
-			//查询失败
-			failure("查询失败");
+			//加载失败
+			failure("加载失败");
 		}
 	});
+}
+
+//TODO:保存
+function save() {
+
 }
 
 //显示提示框
